@@ -9,13 +9,13 @@ const RecieptsReducer = (state = initialState, action) => {
     switch (action.type) {
     case 'ADD_INGREDIENTS':
         return {
-            ingredients: { ...action.payload },
+            ingredients: [...action.payload],
             reciepts
         };
     case 'GET_RECIEPTS':
         return {
             ingredients,
-            reciepts: { ...action.payload }
+            reciepts: [...action.payload]
         };
     default: return state;
     }

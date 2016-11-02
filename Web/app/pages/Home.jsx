@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { showActionError,
 showActionProgress, hideActionProgress } from '../actions/utility-actions';
+import { getReciepts } from '../actions/reciepts-actions';
 
 const stateToProps = state => ({
     ingredients: state.reciepts.ingredients,
@@ -16,6 +17,9 @@ const actionsToProps = (dispatch) => ({
     },
     hideProgress: () => {
         dispatch(hideActionProgress('Home'));
+    },
+    getReciepts: (ingredients) => {
+        dispatch(getReciepts(ingredients));
     }
 });
 
@@ -31,6 +35,9 @@ class Home extends React.Component {
         const ingredients = this.state.ingredients;
         ingredients.push(this.state.newIngredient);
         this.setState({ ingredients, newIngredient: '' });
+    }
+    handleSearch = () => {
+        this.props.getReciepts(this.state.ingredients);
     }
     handleNewInput = (e) => {
         const newIngredient = e.target.value;
@@ -55,9 +62,10 @@ class Home extends React.Component {
                 </button>
             </div>
         ));
-        const reciepts = this.state.reciepts.map((item) => (
-            <div>
-                {item}
+        const reciepts = this.props.reciepts.map((item) => (
+            <div key={item.title}>
+                <img src={item.thumbnail} height="42" width="42" />
+                {item.title}
             </div>
         ));
         const newIngredient = this.state.newIngredient;
@@ -68,6 +76,7 @@ class Home extends React.Component {
                 />
                 <button type="button" onClick={this.handleAddIngredient}>+</button>
                 <span>{ingredients}</span>
+                <button type="button" onClick={this.handleSearch}>Search</button>
                 <p>Reciepts:</p>
                 <span>{reciepts}</span>
             </div>
@@ -88,6 +97,7 @@ Home.propTypes = {
     showError: PropTypes.func,
     showProgress: PropTypes.func,
     hideProgress: PropTypes.func,
+    getReciepts: PropTypes.func,
     ingredients: PropTypes.array,
     reciepts: PropTypes.array
 };

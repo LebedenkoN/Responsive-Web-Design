@@ -8,9 +8,7 @@ import configureStore from 'store/configureStore';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 
-require('../assets/css/pure-min.0.0.6.css');
-require('../assets/css/main.css');
-require('../assets/css/custommenu.css');
+require('../assets/css/styles.css');
 
 import {
     App,
